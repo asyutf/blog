@@ -1,43 +1,32 @@
+// pages/api/blog/[id].ts または pages/api/blog/index.ts のように適切なファイル名を使用してください
+import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function mainconnect(){
-    try {
-      await prisma.$connect();
-    } catch (err) {
-      return Error("DB接続に失敗しました");
-    }
-}
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  await prisma.$connect();
 
-//ブログの全記事取得API
-export const GET = async (req: Request, res: NextResponse) => {
-  try{
-    await mainconnect();
-    const posts = await prisma.post.findMany();
-    return NextResponse.json({ message: "Success", posts },{ status: 200 });
-  }  catch (err) {
-    return NextResponse.json({ message: "Error", err },{ status: 500 });
-  }  finally {
+  try {
+    if (req.method === "GET") {
+      const posts = await prisma.post.findMany();
+      res.status(200).json({ message: "Success", posts });
+    } else if (req.method === "POST") {
+      const { title, description } = req.body;
+      const post = await prisma.post.create({ data: { title, description } });
+      res.status(201).json({ message: "Success", post });
+    } else {
+      // サポートされていないHTTPメソッドの場合
+      res.setHeader("Allow", ["GET", "POST"]);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error", err });
+  } finally {
     await prisma.$disconnect();
   }
-};
+}
 
-//ブログの投稿用API
-export const POST = async (req: Request, res: NextResponse) => {
-    try{
-      const { title , description } = await req.json();
-
-      await mainconnect();
-      const posts = await prisma.post.create({ data: { title, description } });
-      return NextResponse.json({ message: "Success", posts },{ status: 201 });
-    }  catch (err) {
-      return NextResponse.json({ message: "Error", err },{ status: 500 });
-    }  finally {
-      await prisma.$disconnect();
-    }
-  };
 
 /*API(Application Programming Interface)とは、ソフトウェアやアプリケーション間で互いに連携し、情報を交換するための規約や仕様の集まり。
 APIを利用することで、異なるソフトウェアやサービスが互いに機能を共有し、データをやり取りすることができる。*/
