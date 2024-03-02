@@ -1,59 +1,43 @@
-import { NextResponse } from "next/server";
-import { main } from "../route";
+// APIルート: pages/api/blog/[id].ts
+import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();//インスタンス化
+const prisma = new PrismaClient();
 
-//ブログの詳細記事取得API
-export const GET = async (req: Request, res: NextResponse) => {
-    try{
-      const id: number = parseInt(req.url.split("/blog/")[1]);//整数変換。http://localhost:3000/api/blogと3に分けて配列として考える。
-      await main();
-      const post = await prisma.post.findFirst({where: { id } }); //http://localhost:3000/api/blog/3
-      return NextResponse.json({ message: "Success", post },{ status: 200 });
-    }  catch (err) {
-      return NextResponse.json({ message: "Error", err },{ status: 500 });
-    }  finally {
-      await prisma.$disconnect();
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { id } = req.query; // URLからIDを取得
+    const id_string = id as string
+    const postId = parseInt( id_string); // req.queryは配列または文字列を返す可能性がある
+
+    try {
+        switch (req.method) {
+            case "GET":
+                const post = await prisma.post.findUnique({ where: { id: postId } });
+                if (post) {
+                    res.status(200).json({ message: "Success", post });
+                } else {
+                    res.status(404).json({ message: "Post not found" });
+                }
+                break;
+            case "PUT":
+                const { title, description } = req.body;
+                const updatedPost = await prisma.post.update({
+                    where: { id: postId },
+                    data: { title, description },
+                });
+                res.status(200).json({ message: "Success", post: updatedPost });
+                break;
+            case "DELETE":
+                const deletedPost = await prisma.post.delete({ where: { id: postId } });
+                res.status(200).json({ message: "Success", post: deletedPost });
+                break;
+            default:
+                res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
+                res.status(405).end(`Method ${req.method} Not Allowed`);
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Error", err });
     }
-};
-
-//ブログの記事編集API
-export const PUT = async (req: Request, res: NextResponse) => {
-    try{
-      const id: number = parseInt(req.url.split("/blog/")[1]);
-
-      const { title, description } = await req.json();
-
-      await main();
-      const post = await prisma.post.update({
-        data: { title, description },
-        where: { id },
-      });
-      return NextResponse.json({ message: "Success", post },{ status: 200 });
-    }  catch (err) {
-      return NextResponse.json({ message: "Error", err },{ status: 500 });
-    }  finally {
-      await prisma.$disconnect();
-    }
-};
-
-//削除用API
-export const DELETE = async (req: Request, res: NextResponse) => {
-    try{
-      const id: number = parseInt(req.url.split("/blog/")[1]);
-
-
-      await main();
-      const post = await prisma.post.delete({
-        where: { id },
-      });
-      return NextResponse.json({ message: "Success", post },{ status: 200 });
-    }  catch (err) {
-      return NextResponse.json({ message: "Error", err },{ status: 500 });
-    }  finally {
-      await prisma.$disconnect();
-    }
-};
+}
 
 
