@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { main } from "../route";
+//import { main } from "../route";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();//インスタンス化
@@ -8,7 +8,7 @@ const prisma = new PrismaClient();//インスタンス化
 export const GET = async (req: Request, res: NextResponse) => {
     try{
       const id: number = parseInt(req.url.split("/blog/")[1]);//整数変換。http://localhost:3000/api/blogと3に分けて配列として考える。
-      await main();
+      //await main();
       const post = await prisma.post.findFirst({where: { id } }); //http://localhost:3000/api/blog/3
       return NextResponse.json({ message: "Success", post },{ status: 200 });
     }  catch (err) {
@@ -25,7 +25,7 @@ export const PUT = async (req: Request, res: NextResponse) => {
 
       const { title, description } = await req.json();
 
-      await main();
+      //await main();
       const post = await prisma.post.update({
         data: { title, description },
         where: { id },
@@ -44,7 +44,7 @@ export const DELETE = async (req: Request, res: NextResponse) => {
       const id: number = parseInt(req.url.split("/blog/")[1]);
 
 
-      await main();
+      //await main();
       const post = await prisma.post.delete({
         where: { id },
       });

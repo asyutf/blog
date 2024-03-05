@@ -60,7 +60,6 @@ export default async function Home() {
          <blockquote className="font-bold text-slate-700">
         {new Date(post.date).toDateString()}
         {/* {`${post.data.getMonth() + 1}月${post.data.getDate()}日`} */}
-        {/* あとで何月何日にする。 */}
          </blockquote>
        </div>
  
