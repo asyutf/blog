@@ -8,7 +8,10 @@ const postBlog = async (
     title: string | undefined,
     description: string | undefined
 ) => {
-    const url: string = process.env.DATABASE_URL as string;
+  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  if (!url) {
+    throw new Error("API URL is not defined.");
+  }
     const res = await fetch(url,{ //fetch関数
     method: "POST",
     headers: {

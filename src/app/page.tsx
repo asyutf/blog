@@ -3,16 +3,28 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-async function fetchALLBlogs() {
+//async function fetchALLBlogs() {
   /* const res = await fetch(`https://vercel.com/asyutfs-projects/api/blog`,{ //fetch関数
     cache: "no-store", //SSR（サーバーサイドレンダリング）
   }); */
   //console.log(res)
-  const url: string = process.env.DATABASE_URL as string;
-  const res = await fetch(url, {cache: "no-store"});
+  //const url: string = process.env.DATABASE_URL as string;
+  //const res = await fetch(url, {cache: "no-store"});
+  //const data = await res.json();
+  //return data.posts;
+//}
+
+async function fetchALLBlogs() {
+  // 環境変数からURLを取得する際に、undefinedである場合にデフォルトのURLを使用する
+  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  if (!url) {
+    throw new Error("API URL is not defined.");
+  }
+  const res = await fetch(url, { cache: "no-store" });
   const data = await res.json();
   return data.posts;
 }
+
 
 export default async function Home() {//メインコンポーネント
   const posts = await fetchALLBlogs();

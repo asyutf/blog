@@ -9,7 +9,10 @@ const editBlog = async (
     description: string | undefined,
     id: number
 ) => {
-  const url: string = process.env.DATABASE_URL as string;
+  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  if (!url) {
+    throw new Error("API URL is not defined.");
+  }
     const res = await fetch(url,{ //idのとこは、
     method: "PUT",
     headers: {
@@ -22,14 +25,20 @@ const editBlog = async (
 };
 
 const getBlogById = async (id: number) => {
-  const url: string = process.env.DATABASE_URL as string;
+  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  if (!url) {
+    throw new Error("API URL is not defined.");
+  }
   const res = await fetch(url,);
   const data = await res.json();
   return data.post;
 };
 
 const deleteBlog = async (id: number) => {
-  const url: string = process.env.DATABASE_URL as string;
+  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  if (!url) {
+    throw new Error("API URL is not defined.");
+  }
   const res = await fetch(url,{
     method: "DELETE",
     headers: {
