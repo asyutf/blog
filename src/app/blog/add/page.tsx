@@ -1,4 +1,4 @@
-/* "use client";//フックスは、クライアント側しか使えない。サーバーレンダリングをクライアントレンダリングにするため。
+ "use client";//フックスは、クライアント側しか使えない。サーバーレンダリングをクライアントレンダリングにするため。
 
 import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -47,7 +47,7 @@ const PostBlog = () => {
 
   return (
     <>
-  <Toaster /> {//loading skeletonsみたいなコンテンツが読み込まれていることをユーザーに示すプレースホルダーとして}
+  <Toaster /> {/*loading skeletonsみたいなコンテンツが読み込まれていることをユーザーに示すプレースホルダーとして*/}
   <div className="w-full m-auto flex my-4">
     <div className="flex flex-col justify-center items-center m-auto">
       <p className="text-2xl text-slate-200 font-bold p-3">ブログ新規作成 </p>
@@ -90,4 +90,3 @@ export default PostBlog;
 //初期データの取得など、サーバーサイドで実行する必要がある処理にはuseEffectを使用しないように注意する必要がある。
 //マウントとは、コンポーネントがウェブページのDOMに挿入されるプロセスを指す。
 //DOM(Document Object Model)
- */

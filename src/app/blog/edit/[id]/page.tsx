@@ -1,4 +1,4 @@
-/* "use client";
+ "use client";
 
 import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -130,4 +130,3 @@ const EditPost = ({ params }: { params: { id: number } }) => {
 export default EditPost;
 
 //useEffectは、
- */
