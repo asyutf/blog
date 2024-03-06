@@ -4,7 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from 'react'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+
+  datasourceUrl: process.env.DATABASE_URL
+})
 
  async function fetchAllBlogs() {
   // const res = await fetch\\\( ,{ //fetch関数
@@ -45,6 +48,9 @@ export default async function Home() {//メインコンポーネント
   id: 1,
   date: new Date()
 }] */
+
+  console.log("aaaaaaa", process.env.DATABASE_URL)
+
   return (
     <main className="w-full h-full">
   <div className="md:w-2/4 sm:w-3/4 m-auto p-4 my-5 rounded-lg bg-blue-900 drop-shadow-xl">
