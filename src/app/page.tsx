@@ -31,10 +31,20 @@ async function fetchAllBlogs() {
 
 
 export default async function Home() {//メインコンポーネント
-  const posts = await fetchAllBlogs();
+  //const posts = await fetchAllBlogs();
   //console.log('post', posts)
   // console.log('Date', posts[0].data.toDateString())
-
+  const posts: {
+    id: number;
+    title: string;
+    description: string;
+    date: Date;
+}[]=[{
+  description: "aaa",
+  title: "aaa",
+  id: 1,
+  date: new Date()
+}]
   return (
     <main className="w-full h-full">
   <div className="md:w-2/4 sm:w-3/4 m-auto p-4 my-5 rounded-lg bg-blue-900 drop-shadow-xl">
