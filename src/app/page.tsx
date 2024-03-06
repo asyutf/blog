@@ -6,7 +6,7 @@ import React from 'react'
 
 const prisma = new PrismaClient();
 
-async function fetchAllBlogs() {
+/* async function fetchAllBlogs() {
   // const res = await fetch\\\( ,{ //fetch関数
     //cache: "no-store", //SSR（サーバーサイドレンダリング）
   //});
@@ -14,8 +14,8 @@ async function fetchAllBlogs() {
   const res = await prisma.post.findMany();
   console.log("kghajks",res)
   return res;
-  
-}
+
+} */
 
 
 /* async function fetchAllBlogs() {

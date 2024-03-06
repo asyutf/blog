@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+/* import { NextResponse } from "next/server";
 //import { main } from "../route";
 import { PrismaClient } from "@prisma/client";
 
@@ -55,3 +55,4 @@ export const DELETE = async (req: Request, res: NextResponse) => {
       await prisma.$disconnect();
     }
 };
+ */

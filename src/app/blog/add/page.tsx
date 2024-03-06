@@ -1,4 +1,4 @@
-"use client";//フックスは、クライアント側しか使えない。サーバーレンダリングをクライアントレンダリングにするため。
+/* "use client";//フックスは、クライアント側しか使えない。サーバーレンダリングをクライアントレンダリングにするため。
 
 import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -47,10 +47,10 @@ const PostBlog = () => {
 
   return (
     <>
-  <Toaster /> {/*loading skeletonsみたいなコンテンツが読み込まれていることをユーザーに示すプレースホルダーとして*/}
+  <Toaster /> {//loading skeletonsみたいなコンテンツが読み込まれていることをユーザーに示すプレースホルダーとして}
   <div className="w-full m-auto flex my-4">
     <div className="flex flex-col justify-center items-center m-auto">
-      <p className="text-2xl text-slate-200 font-bold p-3">ブログ新規作成 🚀</p>
+      <p className="text-2xl text-slate-200 font-bold p-3">ブログ新規作成 </p>
       <form onSubmit={handleSubmit}>
         <input
           ref={titleRef}
@@ -81,12 +81,13 @@ export default PostBlog;
 //useRefは、
 //{}は、変数しか入らない?。
 //エンドポイントは、ウェブ上のサービスやリソースにアクセスするためのURLやURI。
-/*オプショナルチェーン（Optional Chaining）は、JavaScriptの構文の一つで、
-オブジェクトのプロパティにアクセスする際にそのプロパティが存在しない可能性がある場合に、
-エラーを発生させずに undefined を返す方法です。オプショナルチェーンを使用すると、
-プロパティの存在を確認するための冗長なコードを書く必要がなくなり、コードが簡潔になります。*/
-/*useEffect Hookは、コンポーネントがマウントされた後に実行されるため、クライアントサイドでのみ実行される。
-これは、サーバーサイドではコンポーネントの「マウント」が発生しないためだ。したがって、SSRを使用している場合は、
-初期データの取得など、サーバーサイドで実行する必要がある処理にはuseEffectを使用しないように注意する必要がある。*/
+//オプショナルチェーン（Optional Chaining）は、JavaScriptの構文の一つで、
+//オブジェクトのプロパティにアクセスする際にそのプロパティが存在しない可能性がある場合に、
+//エラーを発生させずに undefined を返す方法です。オプショナルチェーンを使用すると、
+//プロパティの存在を確認するための冗長なコードを書く必要がなくなり、コードが簡潔になります。
+//useEffect Hookは、コンポーネントがマウントされた後に実行されるため、クライアントサイドでのみ実行される。
+//これは、サーバーサイドではコンポーネントの「マウント」が発生しないためだ。したがって、SSRを使用している場合は、
+//初期データの取得など、サーバーサイドで実行する必要がある処理にはuseEffectを使用しないように注意する必要がある。
 //マウントとは、コンポーネントがウェブページのDOMに挿入されるプロセスを指す。
 //DOM(Document Object Model)
+ */

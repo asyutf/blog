@@ -1,15 +1,15 @@
-import { PrismaClient } from "@prisma/client";
+/* import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-/* export async function main():{
-    try {
-      await prisma.$connect();
-    } catch (err) {
-      return Error("DB接続に失敗しました");
-    }たぶん$connectする必要ない。閉じるだけでよいからmain関数のブロックいらない。
-} */
+//export async function main():{
+//  try {
+  //    await prisma.$connect();
+    //} catch (err) {
+      //return Error("DB接続に失敗しました");
+    //}たぶん$connectする必要ない。閉じるだけでよいからmain関数のブロックいらない。
+//} 
 
 //ブログの全記事取得API
 export const GET = async (req: Request, res: NextResponse) => {
@@ -58,4 +58,4 @@ try、...、catchブロックを使用して、async関数内のエラーを捕�
 //createクエリは、prismaを使用したデータ作成。データベース内に新しいレコードを挿入。
 //インスタンスは、クラスから生成されるオブジェクトを指す。
 //prisma.$disconnect()を呼び出して、Prisma Clientのデータベース接続を閉じる。
-//prismaからでーたべーす持ってこれるので、セキュリティ最強。資格情報面でも
+//prismaからでーたべーす持ってこれるので、セキュリティ最強。資格情報面でも */
