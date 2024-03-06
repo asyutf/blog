@@ -1,26 +1,28 @@
 "use client";//フックスは、クライアント側しか使えない。サーバーレンダリングをクライアントレンダリングにするため。
 
+import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 import { Toaster,toast } from 'react-hot-toast';
+
+const prisma = new PrismaClient();
 
 const postBlog = async (
     title: string | undefined,
     description: string | undefined
 ) => {
-  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
-  if (!url) {
-    throw new Error("API URL is not defined.");
-  }
-    const res = await fetch(url,{ //fetch関数
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({title, description}),//JSON形式で表示。
-  });
+    const res = await prisma.post.create({
+      data: {
+        title: title || 'title',//||の右がでふぁると
+        description: description || 'description'
 
-  return res.json();
+      }
+
+    })
+
+
+
+  return res;
 };
 
 const PostBlog = () => {

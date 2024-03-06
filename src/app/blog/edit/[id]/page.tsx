@@ -1,31 +1,31 @@
 "use client";
 
+import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+
+const prisma = new PrismaClient();
 
 const editBlog = async (
     title: string | undefined,
     description: string | undefined,
     id: number
 ) => {
-  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
-  if (!url) {
-    throw new Error("API URL is not defined.");
-  }
-    const res = await fetch(url,{ //idのとこは、
-    method: "PUT",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({title, description, id }),//JSON形式で表示。
-  });
+    const res = await prisma.post.update({
+      where: { id: id},
+      data: {
+        title: title,
+        description: description}
 
-  return res.json();
+    }) //idのとこは、
+    
+
+  return res;
 };
 
 const getBlogById = async (id: number) => {
-  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  const url = process.env.DATABASE_URL || `http://localhost:3000/api/blogs`;
   if (!url) {
     throw new Error("API URL is not defined.");
   }
@@ -35,7 +35,7 @@ const getBlogById = async (id: number) => {
 };
 
 const deleteBlog = async (id: number) => {
-  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  const url = process.env.DATABASE_URL || `http://localhost:3000/api/blogs`;
   if (!url) {
     throw new Error("API URL is not defined.");
   }

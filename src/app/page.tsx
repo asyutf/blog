@@ -1,33 +1,37 @@
 import { PostType } from "@/types";
+import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import React from 'react'
 
+const prisma = new PrismaClient();
 
-//async function fetchALLBlogs() {
-  /* const res = await fetch(`https://vercel.com/asyutfs-projects/api/blog`,{ //fetch関数
-    cache: "no-store", //SSR（サーバーサイドレンダリング）
-  }); */
+async function fetchAllBlogs() {
+  // const res = await fetch\\\( ,{ //fetch関数
+    //cache: "no-store", //SSR（サーバーサイドレンダリング）
+  //});
   //console.log(res)
-  //const url: string = process.env.DATABASE_URL as string;
-  //const res = await fetch(url, {cache: "no-store"});
-  //const data = await res.json();
-  //return data.posts;
-//}
+  const res = await prisma.post.findMany();
+  console.log("kghajks",res)
+  return res;
+  
+}
 
-async function fetchALLBlogs() {
+
+/* async function fetchAllBlogs() {
   // 環境変数からURLを取得する際に、undefinedである場合にデフォルトのURLを使用する
-  const url = process.env.BLOG_API_URL || "デフォルトのAPIエンドポイントURL";
+  const url = process.env.DATABASE_URL || `http://localhost:3000/api/blogs`;
   if (!url) {
     throw new Error("API URL is not defined.");
   }
   const res = await fetch(url, { cache: "no-store" });
   const data = await res.json();
   return data.posts;
-}
+} */
 
 
 export default async function Home() {//メインコンポーネント
-  const posts = await fetchALLBlogs();
+  const posts = await fetchAllBlogs();
   //console.log('post', posts)
   // console.log('Date', posts[0].data.toDateString())
 
