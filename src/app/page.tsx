@@ -4,7 +4,7 @@ import Link from "next/link";
 
 
 async function fetchALLBlogs() {
-  const res = await fetch(`http://localhost:3000/api/blog`,{ //fetch関数
+  const res = await fetch(`https://vercel.com/asyutfs-projects/api/blog`,{ //fetch関数
     cache: "no-store", //SSR（サーバーサイドレンダリング）
   });
   //console.log(res)
@@ -14,7 +14,7 @@ async function fetchALLBlogs() {
   return data.posts;
 }
 
-export default async function Home() {
+export default async function Home() {//メインコンポーネント
   const posts = await fetchALLBlogs();
   //console.log('post', posts)
   // console.log('Date', posts[0].data.toDateString())
@@ -74,3 +74,6 @@ export default async function Home() {
 </main>
 );
 }
+
+/*fetch関数を使用してHTTPリクエストを送信し、リクエストに対するレスポンスを取得できる。
+fetchはPromiseを返すため、then()メソッドやasync/await構文を使用して非同期の結果を扱うことができる。*/
