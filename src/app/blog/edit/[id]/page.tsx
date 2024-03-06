@@ -9,7 +9,8 @@ const editBlog = async (
     description: string | undefined,
     id: number
 ) => {
-    const res = await fetch(`http://localhost:3000/api/blog/${id}`,{ //idのとこは、
+  const url: string = process.env.DATABASE_URL as string;
+    const res = await fetch(url,{ //idのとこは、
     method: "PUT",
     headers: {
         "Content-Type": "application/json",
@@ -21,17 +22,19 @@ const editBlog = async (
 };
 
 const getBlogById = async (id: number) => {
-  const res = await fetch(`http://localhost:3000/api/blog/${id}`,);
+  const url: string = process.env.DATABASE_URL as string;
+  const res = await fetch(url,);
   const data = await res.json();
   return data.post;
 };
 
 const deleteBlog = async (id: number) => {
-    const res = await fetch(`http://localhost:3000/api/blog/${id}`,{
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const url: string = process.env.DATABASE_URL as string;
+  const res = await fetch(url,{
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   return res.json();
 };

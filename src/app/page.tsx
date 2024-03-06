@@ -4,13 +4,13 @@ import Link from "next/link";
 
 
 async function fetchALLBlogs() {
-  const res = await fetch(`https://vercel.com/asyutfs-projects/api/blog`,{ //fetch関数
+  /* const res = await fetch(`https://vercel.com/asyutfs-projects/api/blog`,{ //fetch関数
     cache: "no-store", //SSR（サーバーサイドレンダリング）
-  });
+  }); */
   //console.log(res)
-
+  const url: string = process.env.DATABASE_URL as string;
+  const res = await fetch(url, {cache: "no-store"});
   const data = await res.json();
-
   return data.posts;
 }
 
@@ -77,3 +77,6 @@ export default async function Home() {//メインコンポーネント
 
 /*fetch関数を使用してHTTPリクエストを送信し、リクエストに対するレスポンスを取得できる。
 fetchはPromiseを返すため、then()メソッドやasync/await構文を使用して非同期の結果を扱うことができる。*/
+//cacheは、データや計算結果を一時的に保存する仕組み。
+/*||演算子は、左辺の式を評価し、その結果がtruthy（真と評価される値）ならばそれを返す。
+左辺がfalsy（偽と評価される値）である場合は、右辺の式を評価し、その結果を返す。*/

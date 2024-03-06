@@ -8,7 +8,8 @@ const postBlog = async (
     title: string | undefined,
     description: string | undefined
 ) => {
-    const res = await fetch(`http://localhost:3000/api/blog`,{ //fetch関数
+    const url: string = process.env.DATABASE_URL as string;
+    const res = await fetch(url,{ //fetch関数
     method: "POST",
     headers: {
         "Content-Type": "application/json",
