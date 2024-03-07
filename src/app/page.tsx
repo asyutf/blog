@@ -1,24 +1,13 @@
+"use client";
 import { PostType } from "@/types";
 import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { config } from "@/lib/config";
+import { GET } from "./api/blog/route";
+import supabase from "@/lib/supabase";
 
-const prisma = new PrismaClient({
-
-  datasourceUrl: process.env.DATABASE_URL
-})
-
- async function fetchAllBlogs() {
-  // const res = await fetch\\\( ,{ //fetch関数
-    //cache: "no-store", //SSR（サーバーサイドレンダリング）
-  //});
-  //console.log(res)
-  const res = await prisma.post.findMany();
-  console.log("kghajks",res)
-  return res;
-
-} 
 
 
 /* async function fetchAllBlogs() {
@@ -33,23 +22,31 @@ const prisma = new PrismaClient({
 } */
 
 
-export default async function Home() {//メインコンポーネント
-  const posts = await fetchAllBlogs();
-  //console.log('post', posts)
-  // console.log('Date', posts[0].data.toDateString())
-  /* const posts: {
-    id: number;
-    title: string;
-    description: string;
-    date: Date;
-}[]=[{
-  description: "aaa",
-  title: "aaa",
-  id: 1,
-  date: new Date()
-}] */
 
-  console.log("aaaaaaa", process.env.DATABASE_URL)
+export default  function Home() {//メインコンポーネント
+  const [posts, setPosts] = useState<PostType[]>([]);
+
+  useEffect(() => {
+    // fetchblogsの結果を扱うための非同期関数を定義
+    const fetchData = async () => {
+     
+let { data: Post, error } = await supabase
+.from('Post')
+.select('*')
+console.log(Post);
+if (Post) {
+  setPosts(Post as PostType[]);
+}
+// エラー処理も忘れずに
+if (error) {
+  console.error(error);
+}
+
+    };
+   
+
+    fetchData();
+  }, []); // 空の依存配列で、コンポーネントのマウント時にのみ実行
 
   return (
     <main className="w-full h-full">
