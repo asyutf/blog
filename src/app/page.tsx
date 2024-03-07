@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from 'react'
 import { config } from "@/lib/config";
-import { GET } from "./api/blog/route";
+//import { GET } from "./api/blog/route";
 import supabase from "@/lib/supabase";
 
 

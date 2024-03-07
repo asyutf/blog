@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+/* import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { config } from "@/lib/config";
 
@@ -39,4 +39,4 @@ export  async function GET()  {
     console.error('fetchBlogs error', error);
     return []; // エラーが発生した場合、空の配列を返します
   }
-};
+}; */
