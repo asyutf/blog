@@ -1,6 +1,5 @@
 "use client";
 import { PostType } from "@/types";
-import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from 'react'
@@ -30,7 +29,7 @@ export default  function Home() {//メインコンポーネント
     // fetchblogsの結果を扱うための非同期関数を定義
     const fetchData = async () => {
      
-let { data: Post, error } = await supabase
+const { data: Post, error } = await supabase
 .from('Post')
 .select('*')
 console.log(Post);
