@@ -1,7 +1,7 @@
 "use client";
 import supabase from '@/lib/supabase';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 
 const EditPost = () => {
@@ -11,7 +11,7 @@ const EditPost = () => {
     const id: number = Number(params.id as string)
 
     const titleRef = useRef<HTMLInputElement | null>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +39,21 @@ if(error){
     router.push("/");//ホームにリダイレクト
     router.refresh();
             };
+
+    useEffect(() =>{
+        const getBlogById = async () =>{
+            let { data, error } = await supabase
+            .from('Post')
+            .select("*")
+            .eq('id', id) // IDに基づいてフィルタリング
+            .single(); // 1つのレコードのみを期待
+            console.log("IDからブログ取得",data);
+            titleRef.current!.value = data.title;
+            descriptionRef.current!.value = data.description;
+        };
+        getBlogById();
+        
+    },[id]);
 
   return (
    <>
